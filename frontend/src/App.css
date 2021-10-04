@@ -1,0 +1,14 @@
+.app {
+  background-color: #073B4C;
+}
+
+.app > main {
+  display: flex;
+  justify-content: center;
+}
+
+.app > footer {
+  padding: 20px 50px 20px 50px;
+  text-align: center;
+  color: #fff;
+}

@@ -1,0 +1,34 @@
+.button {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  background-color: white;
+  border: none;
+  color: black;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn--blue {
+  background-color: #002868;
+  color: white;
+}
+
+.btn--red {
+  background-color: #EF476F;
+  color: white;
+}
+
+.btn--yellow {
+  background-color: #FFD166;
+  color: black;
+}
+
+.btn--green {
+  background-color: #06D6A0;
+  color: black;
+}

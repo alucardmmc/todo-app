@@ -1,0 +1,17 @@
+.tab-list {
+  padding: 10px 0 10px 0;
+  margin-top: 20px;
+}
+
+.tab-list > span {
+  padding: 5px 8px;
+  border: 1px solid #118AB2;
+  border-radius: 10px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.tab-list > span.active {
+  background-color: #118AB2;
+  color: #fff;
+}

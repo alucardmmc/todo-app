@@ -1,0 +1,23 @@
+.list-group {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 20px 0;
+  margin: 0;
+}
+
+.list-group-item {
+  border-top: 1px solid rgb(66, 66, 66);
+  padding: 10px 0 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.todo-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.completed-todo {
+  text-decoration: line-through;
+}

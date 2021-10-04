@@ -1,0 +1,26 @@
+.tasks {
+  width: 100%;
+}
+
+.tasks__title {
+  text-align: center;
+  color: #fff;
+}
+
+.tasks__section {
+  padding: 20px;
+  background-color: #fff;
+}
+
+@media (min-width: 640px) {
+  .tasks {
+    width: 500px;
+    align-self: center;
+  }
+
+  .tasks__section {
+    border: 1px solid black;
+    border-radius: 10px;
+
+  }
+}
