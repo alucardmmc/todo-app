@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import TabList from '../components/tasks/TabList';
 import TaskForm from '../components/tasks/TaskForm';
 import TaskList from '../components/tasks/TaskList';
 import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
 
+import axios from '../utilities/axios';
+import { ITask } from '../utilities/taskInterface';
 import './Task.css';
 
 const classes = {
@@ -15,38 +18,21 @@ const classes = {
   tasksButton: 'tasks__button',
 };
 
-const dummytasks = [
-  {
-    id: 1,
-    title: 'Call Clients',
-    description: 'Call clients for overdue invoices.',
-    completed: true,
-  },
-  {
-    id: 2,
-    title: 'Dunning',
-    description: 'Sending dunning letters to clients for uncollected cash.',
-    completed: false,
-  },
-  {
-    id: 3,
-    title: 'Order Release',
-    description: 'Check out customers accounts and release or block orders',
-    completed: true,
-  },
-  {
-    id: 4,
-    title: 'Weekly Reports',
-    description: 'Sending the weekly reports for overdue invoices',
-    completed: false,
-  },
-];
-
 const Task = () => {
   const [viewCompleted, setViewCompleted] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [tasks, setTasks] = useState(dummytasks);
+  const [tasks, setTasks] = useState<ITask[]>([]);
   const [editTask, setEditTask] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const request = await axios.get('/');
+      console.log(request);
+      setTasks(request.data)
+      return request;
+    };
+    fetchData();
+  }, []);
 
   const addTask = (
     id: number,
@@ -87,7 +73,7 @@ const Task = () => {
   const handleAddTask = () => {
     setEditTask({});
     setOpenModal(true);
-  }
+  };
 
   const handleEditTask = (id: number) => {
     let index = tasks.findIndex((item) => item.id === id);
@@ -126,7 +112,7 @@ const Task = () => {
             handleDelete={handleDeleteTask}
           />
         </div>
-        <Modal open={openModal} onClose={() => setOpenModal(false)} >
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <TaskForm addTask={addTask} task={editTask} />
         </Modal>
       </div>
