@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik';
 
 import Button from '../ui/Button';
 import './TaskForm.css';
+import { ITask } from '../../utilities/taskInterface';
 
 const classes = {
   form: 'task-form',
@@ -11,14 +12,14 @@ const classes = {
 };
 
 interface Props {
-  task?: any;
+  task?: Partial<ITask>;
   addTask: (
-    id: number,
     object: {
       title: string;
       description: string;
       completed: boolean;
-    }
+    },
+    id?: number,
   ) => void;
 }
 
@@ -43,7 +44,8 @@ interface Props {
 // We can access the errors with -> 'errors'
 // We can access the submit function with -> 'handleSubmit'
 
-const TaskForm: React.FC<Props> = ({ task, addTask }) => {
+const TaskForm: React.FC<Props> = ({ task={}, addTask }) => {
+
   const getTitle = (obj: any) => {
     if (Object.keys(obj).length === 0) {
       return 'New Task'
@@ -56,9 +58,9 @@ const TaskForm: React.FC<Props> = ({ task, addTask }) => {
       <h1 className={classes.formTitle}>{getTitle(task)}</h1>
       <Formik
         initialValues={{
-          title: task.title || '',
-          description: task.description || '',
-          completed: task.completed || false,
+          title: task?.title || '',
+          description: task?.description || '',
+          completed: task?.completed || false,
         }}
         enableReinitialize
         validate={(values) => {
@@ -82,7 +84,7 @@ const TaskForm: React.FC<Props> = ({ task, addTask }) => {
           console.log(values);
           console.log(task);
           console.log(task.id)
-          addTask(task?.id || Math.floor(Math.random() * 100000), values);
+          addTask(values, task?.id);
           console.log('Sent Form');
           // async call end!
           setSubmitting(false);

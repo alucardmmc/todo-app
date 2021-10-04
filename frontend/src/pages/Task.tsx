@@ -22,50 +22,37 @@ const Task = () => {
   const [viewCompleted, setViewCompleted] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [editTask, setEditTask] = useState({});
+  const [editTask, setEditTask] = useState<Partial<ITask>>({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      const request = await axios.get('/');
-      console.log(request);
-      setTasks(request.data)
-      return request;
-    };
     fetchData();
   }, []);
 
-  const addTask = (
-    id: number,
+  const fetchData = async () => {
+    const request = await axios.get('/');
+    setTasks(request.data);
+    return request;
+  };
+
+  const addTask = async (
     object: {
       title: string;
       description: string;
       completed: boolean;
-    }
+    },
+    id?: number,
   ) => {
-    let index = tasks.findIndex((item) => item.id === id);
-    let tempArray = tasks.slice();
+    let request;
 
-    if (index === -1) {
-      // New Id
-      tempArray.push({
-        id: id,
-        title: object.title,
-        description: object.description,
-        completed: object.completed,
-      });
-      setTasks(tempArray);
-      setOpenModal(false);
-      return;
+    if (id !== undefined) {
+      request = await axios.put(`/${id}/`, object)
+    } else {
+      request = await axios.post('/', object);
     }
 
-    // Old Id
-    tempArray[index] = {
-      id: id,
-      title: object.title,
-      description: object.description,
-      completed: object.completed,
-    };
-    setTasks(tempArray);
+    console.log(`ID IS: ${id}`)
+    console.log(request)
+    fetchData();
     setEditTask({});
     setOpenModal(false);
   };
@@ -75,18 +62,16 @@ const Task = () => {
     setOpenModal(true);
   };
 
-  const handleEditTask = (id: number) => {
+  const handleEditTask = async (id: number) => {
     let index = tasks.findIndex((item) => item.id === id);
     setEditTask(tasks[index]);
     setOpenModal(true);
   };
 
-  const handleDeleteTask = (id: number) => {
-    let index = tasks.findIndex((item) => item.id === id);
-    let tempArray = tasks.slice();
-
-    tempArray.splice(index, 1);
-    setTasks(tempArray);
+  const handleDeleteTask = async (id: number) => {
+    const request = await axios.delete(`/${id}/`);
+    console.log(request)
+    fetchData();
   };
 
   return (
