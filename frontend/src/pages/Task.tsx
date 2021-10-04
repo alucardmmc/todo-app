@@ -29,9 +29,14 @@ const Task = () => {
   }, []);
 
   const fetchData = async () => {
-    const request = await axios.get('/');
-    setTasks(request.data);
-    return request;
+    try {
+      const request = await axios.get('/');
+      setTasks(request.data);
+      return request;
+    } catch (err) {
+      console.log(err)
+      alert(err)
+    }
   };
 
   const addTask = async (
@@ -42,17 +47,17 @@ const Task = () => {
     },
     id?: number,
   ) => {
-    let request;
-
-    if (id !== undefined) {
-      request = await axios.put(`/${id}/`, object)
-    } else {
-      request = await axios.post('/', object);
+    try {
+      if (id !== undefined) {
+        await axios.put(`/${id}/`, object)
+      } else {
+        await axios.post('/', object);
+      }
+      fetchData();
+    } catch(err) {
+      console.log(err)
+      alert(err)
     }
-
-    console.log(`ID IS: ${id}`)
-    console.log(request)
-    fetchData();
     setEditTask({});
     setOpenModal(false);
   };
@@ -69,9 +74,13 @@ const Task = () => {
   };
 
   const handleDeleteTask = async (id: number) => {
-    const request = await axios.delete(`/${id}/`);
-    console.log(request)
-    fetchData();
+    try {
+      await axios.delete(`/${id}/`);
+      fetchData();
+    } catch(err) {
+      console.log(err)
+      alert(err)
+    }
   };
 
   return (

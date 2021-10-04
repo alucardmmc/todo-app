@@ -19,7 +19,7 @@ interface Props {
       description: string;
       completed: boolean;
     },
-    id?: number,
+    id?: number
   ) => void;
 }
 
@@ -44,14 +44,13 @@ interface Props {
 // We can access the errors with -> 'errors'
 // We can access the submit function with -> 'handleSubmit'
 
-const TaskForm: React.FC<Props> = ({ task={}, addTask }) => {
-
+const TaskForm: React.FC<Props> = ({ task = {}, addTask }) => {
   const getTitle = (obj: any) => {
     if (Object.keys(obj).length === 0) {
-      return 'New Task'
+      return 'New Task';
     }
-    return 'Edit Task'
-  }
+    return 'Edit Task';
+  };
 
   return (
     <React.Fragment>
@@ -81,11 +80,7 @@ const TaskForm: React.FC<Props> = ({ task={}, addTask }) => {
         onSubmit={(values, { setSubmitting, resetForm }) => {
           setSubmitting(true);
           // async call here!
-          console.log(values);
-          console.log(task);
-          console.log(task.id)
           addTask(values, task?.id);
-          console.log('Sent Form');
           // async call end!
           setSubmitting(false);
           resetForm();
@@ -130,7 +125,7 @@ const TaskForm: React.FC<Props> = ({ task={}, addTask }) => {
               color='green'
               disabled={isSubmitting}
             />
-            <pre>{JSON.stringify(values, null, 2)}</pre>
+            {/* <pre>{JSON.stringify(values, null, 2)}</pre> */}
           </Form>
         )}
       </Formik>
